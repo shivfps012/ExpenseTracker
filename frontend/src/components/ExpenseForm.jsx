@@ -46,43 +46,41 @@ export default function ExpenseForm({ onExpenseAdded }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem' }}>
-            <h3>Add Expense</h3>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        <form onSubmit={handleSubmit} className="expense-form">
+            <h3 className="section-title">Add Expense</h3>
+            {error && <p className="error-text">{error}</p>}
+
+            <div className="form-grid">
                 <input 
                     type="number" step="0.01" min="0.01" placeholder="Amount (₹)" 
                     value={amount} onChange={e => setAmount(e.target.value)} required 
-                    style={{ flex: 1, padding: '0.5rem' }}
+                    className="input-control"
                 />
                 
-                {/* --- NEW DROPDOWN --- */}
                 <select 
                     value={category} 
                     onChange={e => setCategory(e.target.value)} 
                     required 
-                    style={{ flex: 1, padding: '0.5rem' }}
+                    className="input-control"
                 >
                     <option value="" disabled>Select a Category</option>
                     {EXPENSE_CATEGORIES.map(cat => (
                         <option key={cat} value={cat}>{cat}</option>
                     ))}
                 </select>
-                {/* ------------------ */}
 
                 <input 
                     type="date" 
                     value={date} onChange={e => setDate(e.target.value)} required 
-                    style={{ flex: 1, padding: '0.5rem' }}
+                    className="input-control"
                 />
             </div>
             <input 
                 type="text" placeholder="Description (Optional)" 
-                style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem' }}
+                className="input-control input-full"
                 value={description} onChange={e => setDescription(e.target.value)} 
             />
-            <button type="submit" disabled={loading} style={{ padding: '0.5rem 1rem' }}>
+            <button type="submit" disabled={loading} className="btn-primary">
                 {loading ? 'Saving...' : 'Save Expense'}
             </button>
         </form>

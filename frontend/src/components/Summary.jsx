@@ -22,7 +22,7 @@ export default function Summary({ expenses }) {
             border: '1px solid #bfdbfe'
         }}>
             <h2 style={{ marginTop: 0, marginBottom: '1rem', color: '#1e40af' }}>
-                Visible Total: {formatCurrency(totalCents)}
+                 Total Expenses: {formatCurrency(totalCents)}
             </h2>
             
             <h4 style={{ margin: '0 0 0.75rem 0', fontSize: '0.9rem', color: '#1d4ed8' }}>
