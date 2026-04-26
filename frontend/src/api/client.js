@@ -1,5 +1,12 @@
-// Uses an environment variable if available (e.g., in Vite), falling back to localhost
-const BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:5000/api';
+// Uses an environment variable if available (e.g., in Vite), falling back to localhost.
+// Normalizes the value so both "https://site.com" and "https://site.com/api" work.
+const RAW_BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:5000';
+const NORMALIZED_BASE_URL = RAW_BASE_URL.replace(/\/$/, '');
+const BASE_URL = NORMALIZED_BASE_URL.endsWith('/api')
+    ? NORMALIZED_BASE_URL
+    : `${NORMALIZED_BASE_URL}/api`;
+
+export const getApiBaseUrl = () => BASE_URL;
 
 export const apiClient = async (endpoint, options = {}) => {
     const defaultHeaders = {
