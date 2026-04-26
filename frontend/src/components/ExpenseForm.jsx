@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { EXPENSE_CATEGORIES } from '../utils/constants';
 
 export default function ExpenseForm({ onExpenseAdded }) {
     const [amount, setAmount] = useState('');
@@ -18,10 +19,11 @@ export default function ExpenseForm({ onExpenseAdded }) {
             category,
             description,
             date,
-            idempotencyKey: crypto.randomUUID() // Built-in simple unique ID generator
+            idempotencyKey: crypto.randomUUID()
         };
 
         try {
+            // Adjust to your API client or fetch call as needed
             const response = await fetch('http://localhost:5000/api/expenses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -32,8 +34,9 @@ export default function ExpenseForm({ onExpenseAdded }) {
             
             // Reset form
             setAmount('');
+            setCategory(''); // Reset dropdown
             setDescription('');
-            onExpenseAdded(); // Trigger list refresh
+            onExpenseAdded(); 
             
         } catch (err) {
             setError('Error saving expense. Please try again.');
@@ -51,21 +54,35 @@ export default function ExpenseForm({ onExpenseAdded }) {
                 <input 
                     type="number" step="0.01" min="0.01" placeholder="Amount (₹)" 
                     value={amount} onChange={e => setAmount(e.target.value)} required 
+                    style={{ flex: 1, padding: '0.5rem' }}
                 />
-                <input 
-                    type="text" placeholder="Category" 
-                    value={category} onChange={e => setCategory(e.target.value)} required 
-                />
+                
+                {/* --- NEW DROPDOWN --- */}
+                <select 
+                    value={category} 
+                    onChange={e => setCategory(e.target.value)} 
+                    required 
+                    style={{ flex: 1, padding: '0.5rem' }}
+                >
+                    <option value="" disabled>Select a Category</option>
+                    {EXPENSE_CATEGORIES.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </select>
+                {/* ------------------ */}
+
                 <input 
                     type="date" 
                     value={date} onChange={e => setDate(e.target.value)} required 
+                    style={{ flex: 1, padding: '0.5rem' }}
                 />
             </div>
             <input 
-                type="text" placeholder="Description (Optional)" style={{ width: '100%', marginBottom: '1rem' }}
+                type="text" placeholder="Description (Optional)" 
+                style={{ width: '100%', marginBottom: '1rem', padding: '0.5rem' }}
                 value={description} onChange={e => setDescription(e.target.value)} 
             />
-            <button type="submit" disabled={loading}>
+            <button type="submit" disabled={loading} style={{ padding: '0.5rem 1rem' }}>
                 {loading ? 'Saving...' : 'Save Expense'}
             </button>
         </form>

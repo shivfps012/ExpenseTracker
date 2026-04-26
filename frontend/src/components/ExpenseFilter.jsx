@@ -1,4 +1,5 @@
 import React from 'react';
+import { EXPENSE_CATEGORIES } from '../utils/constants';
 
 export default function ExpenseFilter({ categoryFilter, setCategoryFilter, sortOrder, setSortOrder }) {
     return (
@@ -15,14 +16,21 @@ export default function ExpenseFilter({ categoryFilter, setCategoryFilter, sortO
                 <label htmlFor="categoryFilter" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 'bold' }}>
                     Filter by Category
                 </label>
-                <input
+                
+                {/* --- NEW FILTER DROPDOWN --- */}
+                <select
                     id="categoryFilter"
-                    type="text"
-                    placeholder="e.g., Food, Transport..."
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
                     style={{ width: '100%', padding: '0.5rem', border: '1px solid #cbd5e1', borderRadius: '4px' }}
-                />
+                >
+                    <option value="">All Categories</option>
+                    {EXPENSE_CATEGORIES.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
+                    ))}
+                </select>
+                {/* ------------------------- */}
+
             </div>
             
             <div style={{ flex: 1 }}>
