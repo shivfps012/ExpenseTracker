@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types'; // 1. Import PropTypes
 import { EXPENSE_CATEGORIES } from '../utils/constants';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export default function ExpenseForm({ onExpenseAdded }) {
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
@@ -25,7 +27,7 @@ export default function ExpenseForm({ onExpenseAdded }) {
 
         try {
             // Adjust to your API client or fetch call as needed
-            const response = await fetch('http://localhost:5000/api/expenses', {
+            const response = await fetch(`${API_BASE_URL}/expenses`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(expenseData)

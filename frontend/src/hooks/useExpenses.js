@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export const useExpenses = (categoryFilter, sortOrder) => {
     const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -13,7 +15,7 @@ export const useExpenses = (categoryFilter, sortOrder) => {
             if (categoryFilter) params.append('category', categoryFilter);
             if (sortOrder) params.append('sort', sortOrder);
 
-            const response = await fetch(`http://localhost:5000/api/expenses?${params.toString()}`);
+            const response = await fetch(`${API_BASE_URL}/expenses?${params.toString()}`);
             if (!response.ok) throw new Error('Failed to fetch data');
             
             const data = await response.json();
