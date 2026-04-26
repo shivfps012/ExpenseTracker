@@ -2,9 +2,18 @@ import React from 'react';
 import { formatCurrency } from '../utils/currency';
 
 export default function ExpenseBreakdown({ expenses }) {
-    if (!expenses || expenses.length === 0) return null;
+    const totalCents = expenses && expenses.length > 0 
+        ? expenses.reduce((sum, exp) => sum + exp.amount, 0) 
+        : 0;
 
-    const totalCents = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+    if (!expenses || expenses.length === 0) {
+        return (
+            <div className="breakdown">
+                <h3 className="section-title">Expense Breakdown</h3>
+                <p className="helper-text">No expense data to display yet. Add expenses to see the breakdown.</p>
+            </div>
+        );
+    }
 
     const categoryTotals = expenses.reduce((acc, exp) => {
         acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
