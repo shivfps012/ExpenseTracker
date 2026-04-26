@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { formatCurrency } from '../utils/currency';
 
 export default function ExpenseList({ expenses, loading, error }) {
@@ -31,3 +32,20 @@ export default function ExpenseList({ expenses, loading, error }) {
         </div>
     );
 }
+ExpenseList.propTypes = {
+    expenses: PropTypes.arrayOf(
+        PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            amount: PropTypes.number.isRequired,
+            category: PropTypes.string.isRequired,
+            description: PropTypes.string, // Optional
+            date: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    loading: PropTypes.bool.isRequired,
+    // error can be a string, or null if there is no error
+    error: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.oneOf([null])
+    ]),
+};

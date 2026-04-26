@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // 1. Import PropTypes
 import { EXPENSE_CATEGORIES } from '../utils/constants';
 
 export default function ExpenseForm({ onExpenseAdded }) {
@@ -86,3 +87,6 @@ export default function ExpenseForm({ onExpenseAdded }) {
         </form>
     );
 }
+ExpenseForm.propTypes = {
+    onExpenseAdded: PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { EXPENSE_CATEGORIES } from '../utils/constants';
 
 export default function ExpenseFilter({ categoryFilter, setCategoryFilter, sortOrder, setSortOrder }) {
@@ -40,3 +41,9 @@ export default function ExpenseFilter({ categoryFilter, setCategoryFilter, sortO
         </div>
     );
 }
+ExpenseFilter.propTypes = {
+    categoryFilter: PropTypes.string.isRequired,
+    setCategoryFilter: PropTypes.func.isRequired,
+    sortOrder: PropTypes.string.isRequired,
+    setSortOrder: PropTypes.func.isRequired,
+};

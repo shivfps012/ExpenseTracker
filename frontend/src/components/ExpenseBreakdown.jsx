@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { formatCurrency } from '../utils/currency';
 
 export default function ExpenseBreakdown({ expenses }) {
@@ -55,3 +56,11 @@ export default function ExpenseBreakdown({ expenses }) {
         </div>
     );
 }
+ExpenseBreakdown.propTypes = {
+    expenses: PropTypes.arrayOf(
+        PropTypes.shape({
+            amount: PropTypes.number.isRequired,
+            category: PropTypes.string.isRequired,
+        })
+    ).isRequired, // We only strictly need amount and category for this component's logic
+};
