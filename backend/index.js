@@ -1,7 +1,8 @@
-// backend/index.js
-require('dotenv').config(); // Load environment variables first
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet'); // 1. Import helmet
+const morgan = require('morgan'); // 2. Import morgan
 
 const connectDB = require('./config/db');
 const expenseRoutes = require('./routes/expenseRoutes');
@@ -13,14 +14,22 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 connectDB();
 
-// Core Middlewares
-app.use(cors());
-app.use(express.json()); // Parses incoming JSON requests
+// --- Core Middlewares ---
 
-// Mount Routes
+// 3. Add Helmet FIRST to secure HTTP headers
+app.use(helmet()); 
+
+// 4. Add Morgan for logging. 
+// 'dev' is a preset format that color-codes the status (e.g., green for 200, red for 500)
+app.use(morgan('dev')); 
+
+app.use(cors());
+app.use(express.json());
+
+// --- Mount Routes ---
 app.use('/api/expenses', expenseRoutes);
 
-// Global Error Handler (MUST be the last middleware)
+// --- Global Error Handler ---
 app.use(errorHandler);
 
 app.listen(PORT, () => {
